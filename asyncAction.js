@@ -18,16 +18,16 @@ const fetchUserRequest=()=>{
         type:FETCH_USER_REQUEST
     }
 }
-const fetchUserSuccess=()=>{
+const fetchUserSuccess=(users)=>{
     return {
         type:FETCH_USER_SUCCESS,
         payload:users,
     }
 }
-const fetchUserFailure=()=>{
+const fetchUserFailure=(error)=>{
     return{
         type:FETCH_USER_FAILURE,
-        payload:error
+        payload:error,
     }
 }
 
@@ -39,11 +39,12 @@ const reducer= (state = initialState, action) => {
         return { 
             ...state, 
             loading:true 
-        };
+        }
     case FETCH_USER_SUCCESS:
         return { 
-          users:action.payload,
-          error:'',  
+            loading:false, 
+            users:action.payload,
+            error:'',  
         }
     case FETCH_USER_REQUEST:
         return { 
@@ -56,8 +57,18 @@ const reducer= (state = initialState, action) => {
 
 const fetchUsers=()=>{
     return function(dispatch){
-        axios.get("https://jsonplaceholder.typicode.com/users");
+        dispatch(fetchUserRequest())
+       axios.get("https://jsonplaceholder.typicode.com/users")
+            .then(response=>{
+                const users=response.data.map(user=>user.id)
+                dispatch(fetchUserSuccess(users))
+            })
+            .catch(error=>{
+            dispatch(fetchUserFailure(error.message))
+            })
     }
 }
 
 const store=createStore(reducer, applyMiddleware(thunkMiddleware))
+store.subscribe(()=>{console.log(store.getState())})
+store.dispatch(fetchUsers())
