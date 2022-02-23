@@ -1,0 +1,28 @@
+{
+  "name": "redux-js-native",
+  "version": "1.0.0",
+  "description": "test redux",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiorAbjalilov/Redux-js-native.git"
+  },
+  "keywords": [
+    "js",
+    "redux"
+  ],
+  "author": "Abjalilov Diyor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DiorAbjalilov/Redux-js-native/issues"
+  },
+  "homepage": "https://github.com/DiorAbjalilov/Redux-js-native#readme",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "redux": "^4.1.2",
+    "redux-thunk": "^2.4.1"
+  }
+}
